@@ -5,11 +5,12 @@ import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.callbacks.XC_LayoutInflated;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
+import de.robv.android.xposed.IXposedHookZygoteInit;
+import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
+import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 
 public class Player implements IXposedHookInitPackageResources, IXposedHookZygoteInit {
 	/**
@@ -41,12 +42,16 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 		resparam.res.setReplacement("com.spotify.music", "drawable", "btn_player_in_collection_checked", modRes.fwd(R.drawable.btn_player_in_collection_checked));
 		resparam.res.setReplacement("com.spotify.music", "drawable", "icn_notification_dismiss", modRes.fwd(R.drawable.icn_notification_dismiss));
 
-		//resparam.res.setReplacement("com.spotify.music", "color", "notification_bg_color", Color.TRANSPARENT);
+		// resparam.res.setReplacement("com.spotify.music", "color", "notification_bg_color", Color.TRANSPARENT);
 
 		resparam.res.hookLayout("com.spotify.music", "layout", "notification_small_player", new XC_LayoutInflated() {
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
 				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+
+				TextView artist = (TextView) liparam.view.findViewById(
+						liparam.res.getIdentifier("title", "id", "com.spotify.music"));
+				artist.setTextColor(Color.BLACK);
 
 				ImageButton play = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("play", "id", "com.spotify.music"));
@@ -58,15 +63,11 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 
 				ImageButton next = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("next", "id", "com.spotify.music"));
-				next.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE)); // next_disabled
+				next.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
 
 				ImageButton next_disabled = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("next_disabled", "id", "com.spotify.music"));
 				next_disabled.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
-
-				/*ImageButton close = (ImageButton) liparam.view.findViewById(
-						liparam.res.getIdentifier("close", "id", "com.spotify.music"));
-				pause.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE));*/
 			}
 		});
 
@@ -74,6 +75,10 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
 				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+
+				TextView artist = (TextView) liparam.view.findViewById(
+						liparam.res.getIdentifier("firstLine", "id", "com.spotify.music"));
+				artist.setTextColor(Color.WHITE);
 
 				ImageButton add_to = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("add_to", "id", "com.spotify.music"));
@@ -89,6 +94,10 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
 				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+
+				TextView artist = (TextView) liparam.view.findViewById(
+						liparam.res.getIdentifier("firstLine", "id", "com.spotify.music"));
+				artist.setTextColor(Color.BLACK);
 
 				ImageButton notification_positive_feedback = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("notification_positive_feedback", "id", "com.spotify.music"));
@@ -112,6 +121,10 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
 				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+
+				TextView artist = (TextView) liparam.view.findViewById(
+						liparam.res.getIdentifier("firstLine", "id", "com.spotify.music"));
+				artist.setTextColor(Color.BLACK);
 
 				ImageButton notification_radio_thumb_down = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("notification_radio_thumb_down", "id", "com.spotify.music"));
