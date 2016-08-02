@@ -42,12 +42,12 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 		resparam.res.setReplacement("com.spotify.music", "drawable", "btn_player_in_collection_checked", modRes.fwd(R.drawable.btn_player_in_collection_checked));
 		resparam.res.setReplacement("com.spotify.music", "drawable", "icn_notification_dismiss", modRes.fwd(R.drawable.icn_notification_dismiss));
 
-		// resparam.res.setReplacement("com.spotify.music", "color", "notification_bg_color", Color.TRANSPARENT);
+		final int miuiColor = Color.WHITE;
 
 		resparam.res.hookLayout("com.spotify.music", "layout", "notification_small_player", new XC_LayoutInflated() {
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
-				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+				liparam.view.setBackgroundColor(miuiColor); // notification_bg_color
 
 				TextView artist = (TextView) liparam.view.findViewById(
 						liparam.res.getIdentifier("title", "id", "com.spotify.music"));
@@ -74,11 +74,11 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 		resparam.res.hookLayout("com.spotify.music", "layout", "notification_big_player", new XC_LayoutInflated() {
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
-				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+				liparam.view.setBackgroundColor(miuiColor); // notification_bg_color
 
 				TextView artist = (TextView) liparam.view.findViewById(
 						liparam.res.getIdentifier("firstLine", "id", "com.spotify.music"));
-				artist.setTextColor(Color.WHITE);
+				artist.setTextColor(Color.BLACK);
 
 				ImageButton add_to = (ImageButton) liparam.view.findViewById(
 						liparam.res.getIdentifier("add_to", "id", "com.spotify.music"));
@@ -93,7 +93,7 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 		resparam.res.hookLayout("com.spotify.music", "layout", "notification_big_player_cluster", new XC_LayoutInflated() {
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
-				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+				liparam.view.setBackgroundColor(miuiColor); // notification_bg_color
 
 				TextView artist = (TextView) liparam.view.findViewById(
 						liparam.res.getIdentifier("firstLine", "id", "com.spotify.music"));
@@ -120,7 +120,7 @@ public class Player implements IXposedHookInitPackageResources, IXposedHookZygot
 		resparam.res.hookLayout("com.spotify.music", "layout", "notification_big_player_radio", new XC_LayoutInflated() {
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
-				liparam.view.setBackgroundColor(Color.TRANSPARENT); // notification_bg_color
+				liparam.view.setBackgroundColor(miuiColor); // notification_bg_color
 
 				TextView artist = (TextView) liparam.view.findViewById(
 						liparam.res.getIdentifier("firstLine", "id", "com.spotify.music"));

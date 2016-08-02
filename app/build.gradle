@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 25
+    buildToolsVersion 25
 
     defaultConfig {
         applicationId "com.kollnig.spomiui"
         minSdkVersion 21
-        targetSdkVersion 24
-        versionCode 3
-        versionName "1.0.1"
+        targetSdkVersion 25
+        versionCode 4
+        versionName "1.0.2"
     }
     buildTypes {
         release {
@@ -17,10 +17,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-repositories {
-    jcenter();
 }
 
 dependencies {
